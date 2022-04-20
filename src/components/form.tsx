@@ -76,7 +76,7 @@ export default function Form() {
         name="depart"
         render={
           ({ field: { onChange, onBlur, value, ref } }) => (
-            <CustomDatePicker />
+            <CustomDatePicker key="depart" label="Départ"/>
           )
         }
       />
@@ -86,7 +86,7 @@ export default function Form() {
         name="return"
         render={
           ({ field: { onChange, onBlur, value, ref } }) => (
-            <CustomDatePicker />
+            <CustomDatePicker key="return" label="Retour"/>
           )
         }
       />

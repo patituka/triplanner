@@ -12,7 +12,10 @@ import {
 
 type DatepickerType = "date" | "month" | "year";
 
-export default function CustomDatePicker() {
+export default function CustomDatePicker({ key, label }: {
+    key: string;
+    label: any;
+}) {
     const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const [dayCount, setDayCount] = useState<Array<number>>([]);
     const [blankDays, setBlankDays] = useState<Array<number>>([]);
@@ -119,7 +122,7 @@ export default function CustomDatePicker() {
                 htmlFor="datepicker"
                 className="text-left block text-sm font-medium text-gray-700"
             >
-                Select Date
+                {label}
             </label>
             <div className="relative">
                 <input type="hidden" name="date" />
