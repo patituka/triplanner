@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import CountrySelect from "./place-form";
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import CustomDatePicker from "./datepicker";
+import Autocomplete from "./autocomplete";
+import Example from "./classe-form";
 
 export interface IFormInput {
   type: string;
@@ -16,119 +17,118 @@ export interface IFormInput {
   class: string
 }
 
+export interface IFlyOptions {
+  adult: number;
+  child: number;
+  class: string
+}
+
+
 export default function Form() {
   const { register, handleSubmit, control } = useForm<IFormInput>();
   const onSubmit: SubmitHandler<IFormInput> = data => console.log(data);
 
+  const [flyOptions, setFlyOptions] = useState<IFlyOptions>({
+    adult: 0,
+    child: 0,
+    class: ''
+  });
+
+  const handleFlyOptions = (options: IFlyOptions) => {
+    setFlyOptions(options);
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
 
-      <div className="md:grid md:grid-cols-3 md:gap-6">
+      <Example handleFlyOptions={handleFlyOptions} />
 
-        <label htmlFor="field-wind" className="block text-sm font-medium text-gray-700">
+      <div className="md:grid md:grid-cols-3 md:gap-1">
+
+        <label htmlFor="type" className="block text-sm font-medium text-gray-700">
           <input
-            className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-
+            className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
             {...register("type")}
             type="radio"
-            name="weather"
-            value="wind"
-            id="field-wind"
-          />
-          Aller-retour
+            name="type"
+            value="ar"
+          /><span className="px-4"
+          >Aller-retour</span>
+
         </label>
 
-        <label htmlFor="field-sun" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="type" className="block text-sm font-medium text-gray-700">
           <input
-            className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-
+            className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
             {...register("type")}
             type="radio"
-            name="weather"
-            value="sun"
-            id="field-sun"
+            name="type"
+            value="a"
           />
           Aller simple
         </label>
 
-        <label htmlFor="field-sun" className="block text-sm font-medium text-gray-700">
+        <label
+          htmlFor="type"
+          className="block text-sm font-medium text-gray-700">
           <input
-            className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-
+            className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
             {...register("type")}
             type="radio"
-            name="weather"
-            value="sun"
-            id="field-sun"
+            name="type"
+            value="multi"
           />
           Multi-destinations
         </label>
       </div>
 
-      <div className="md:grid md:grid-cols-4 md:gap-6">
+      <div className="md:grid md:grid-cols-4 md:gap-2">
+        <Controller
+          control={control}
+          name="from"
+          render={
+            ({ field: { onChange, onBlur, value, ref } }) => (
+              <Autocomplete name="from" label="From" />
+            )
+          }
+        />
 
+        <Controller
+          control={control}
+          name="to"
+          render={
+            ({ field: { onChange, onBlur, value, ref } }) => (
+              <Autocomplete name="to" label="To" />
+            )
+          }
+        />
 
-      <CountrySelect control={control} {...register("to", { required: true })} />
-      <CountrySelect control={control} {...register("from", { required: true })} />
+        <Controller
+          control={control}
+          name="depart"
+          render={
+            ({ field: { onChange, onBlur, value, ref } }) => (
+              <CustomDatePicker key="depart" label="Départ" />
+            )
+          }
+        />
 
-      <Controller
-        control={control}
-        name="depart"
-        render={
-          ({ field: { onChange, onBlur, value, ref } }) => (
-            <CustomDatePicker key="depart" label="Départ"/>
-          )
-        }
-      />
-
-      <Controller
-        control={control}
-        name="return"
-        render={
-          ({ field: { onChange, onBlur, value, ref } }) => (
-            <CustomDatePicker key="return" label="Retour"/>
-          )
-        }
-      />
+        <Controller
+          control={control}
+          name="return"
+          render={
+            ({ field: { onChange, onBlur, value, ref } }) => (
+              <CustomDatePicker key="return" label="Retour" />
+            )
+          }
+        />
 
       </div>
 
-      <div className="col-span-2 sm:col-span-3">
-        <label htmlFor="country" className="text-left block text-sm font-medium text-gray-700">
-          Classe
-        </label>
-        <select
-          id="country"
-          autoComplete="country-name"
-          className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          {...register("class", { required: true })}
-        >
-          <option value="eco">Economique</option>
-          <option value="No">Eco. supérieur</option>
-          <option value="No">Affaires</option>
-          <option value="No">Premiere</option>
-        </select>
-      </div>
-
-      <div className="col-span-2 sm:col-span-3">
-        <label htmlFor="country" className="text-left block text-sm font-medium text-gray-700">
-          Adulte
-        </label>
-        <input className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" type="number" placeholder="Adulte" {...register("adult", { required: true })} />
-      </div>
-
-      <div className="col-span-2 sm:col-span-3">
-        <label htmlFor="country" className="text-left block text-sm font-medium text-gray-700">
-          Classe
-        </label>
-        <input className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" type="number" placeholder="Child" {...register("child")} />
-      </div>
-
-
-      <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+      <div className="px-4 py-3 text-right bg-gray-50 sm:px-6">
         <button
           type="submit"
-          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           Envoyer
         </button>

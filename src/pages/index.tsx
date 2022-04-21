@@ -109,7 +109,10 @@ const IndexPage = () => {
               <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                 <span className="block xl:inline">Votre voyage commence ici</span>
               </h1>
+              <div className="px-4 py-8">
+
               <Form />
+              </div>
             </div>
           </main>
         </div>
