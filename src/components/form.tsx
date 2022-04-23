@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import CountrySelect from "./place-form";
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import "react-datepicker/dist/react-datepicker.css";
 import CustomDatePicker from "./datepicker";
 import Autocomplete from "./autocomplete";
-import Example from "./classe-form";
+import ClassForm from "./class-form";
 
 export interface IFormInput {
   type: string;
@@ -20,9 +19,8 @@ export interface IFormInput {
 export interface IFlyOptions {
   adult: number;
   child: number;
-  class: string
+  class: string;
 }
-
 
 export default function Form() {
   const { register, handleSubmit, control } = useForm<IFormInput>();
@@ -31,7 +29,7 @@ export default function Form() {
   const [flyOptions, setFlyOptions] = useState<IFlyOptions>({
     adult: 0,
     child: 0,
-    class: ''
+    class: 'eco'
   });
 
   const handleFlyOptions = (options: IFlyOptions) => {
@@ -41,23 +39,20 @@ export default function Form() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
 
-      <Example handleFlyOptions={handleFlyOptions} />
+      <div className="justify-start py-6 md:flex sm:grid sm:grid-cols-4">
 
-      <div className="md:grid md:grid-cols-3 md:gap-1">
-
-        <label htmlFor="type" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="type" className="block text-sm font-medium">
           <input
             className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
             {...register("type")}
             type="radio"
             name="type"
             value="ar"
-          /><span className="px-4"
-          >Aller-retour</span>
-
+          />
+          <span className="px-2 text-white">Aller-retour</span>
         </label>
 
-        <label htmlFor="type" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="type" className="block text-sm font-medium">
           <input
             className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
             {...register("type")}
@@ -65,12 +60,12 @@ export default function Form() {
             name="type"
             value="a"
           />
-          Aller simple
+          <span className="px-2 text-white" >Aller simple</span>
         </label>
 
         <label
           htmlFor="type"
-          className="block text-sm font-medium text-gray-700">
+          className="block text-sm font-medium">
           <input
             className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
             {...register("type")}
@@ -78,11 +73,12 @@ export default function Form() {
             name="type"
             value="multi"
           />
-          Multi-destinations
+          <span className="px-2 text-white">Multi-destinations</span>
         </label>
       </div>
 
-      <div className="md:grid md:grid-cols-4 md:gap-2">
+      <div className="md:grid md:grid-cols-6 md:gap-2">
+        
         <Controller
           control={control}
           name="from"
@@ -123,14 +119,19 @@ export default function Form() {
           }
         />
 
+        <ClassForm handleFlyOptions={handleFlyOptions} />
+
       </div>
 
-      <div className="px-4 py-3 text-right bg-gray-50 sm:px-6">
+
+
+
+      <div className="px-4 py-3 text-right sm:px-6">
         <button
           type="submit"
           className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
-          Envoyer
+          Trouver un vol
         </button>
       </div>
 

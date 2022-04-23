@@ -120,7 +120,7 @@ export default function CustomDatePicker({ key, label }: {
         <div className="col-span-1">
             <label
                 htmlFor="datepicker"
-                className="text-left block text-sm font-medium text-gray-700"
+                className="block px-2 text-xs font-medium text-left text-white"
             >
                 {label}
             </label>
@@ -129,17 +129,17 @@ export default function CustomDatePicker({ key, label }: {
                 <input
                     type="text"
                     readOnly
-                    className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     placeholder="Select date"
                     value={format(selectedDate, "yyyy-MM-dd")}
                     onClick={toggleDatepicker}
                 />
                 <div
-                    className="cursor-pointer absolute top-0 right-0 px-3 py-2"
+                    className="absolute top-0 right-0 px-3 py-2 cursor-pointer"
                     onClick={toggleDatepicker}
                 >
                     <svg
-                        className="h-6 w-6 text-gray-400"
+                        className="w-4 h-4 text-gray-400"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -154,18 +154,18 @@ export default function CustomDatePicker({ key, label }: {
                 </div>
                 {showDatepicker && (
                     <div
-                        className="bg-white mt-12 rounded-lg shadow p-4 absolute top-0 left-0"
+                        className="absolute top-0 left-0 p-4 mt-12 bg-white rounded-lg shadow"
                         style={{ width: "17rem" }}
                     >
-                        <div className="flex justify-between items-center mb-2">
+                        <div className="flex items-center justify-between mb-2">
                             <div>
                                 <button
                                     type="button"
-                                    className="transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 rounded-full"
+                                    className="inline-flex p-1 transition duration-100 ease-in-out rounded-full cursor-pointer hover:bg-gray-200"
                                     onClick={decrement}
                                 >
                                     <svg
-                                        className="h-6 w-6 text-gray-500 inline-flex"
+                                        className="inline-flex w-6 h-6 text-gray-500"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -182,7 +182,7 @@ export default function CustomDatePicker({ key, label }: {
                             {type === "date" && (
                                 <div
                                     onClick={showMonthPicker}
-                                    className="flex-grow p-1 text-lg font-bold text-gray-800 cursor-pointer hover:bg-gray-200 rounded-lg"
+                                    className="flex-grow p-1 text-lg font-bold text-gray-800 rounded-lg cursor-pointer hover:bg-gray-200"
                                 >
                                     <p className="text-center">
                                         {format(datepickerHeaderDate, "MMMM")}
@@ -191,7 +191,7 @@ export default function CustomDatePicker({ key, label }: {
                             )}
                             <div
                                 onClick={showYearPicker}
-                                className="flex-grow p-1 text-lg font-bold text-gray-800 cursor-pointer hover:bg-gray-200 rounded-lg"
+                                className="flex-grow p-1 text-lg font-bold text-gray-800 rounded-lg cursor-pointer hover:bg-gray-200"
                             >
                                 <p className="text-center">
                                     {format(datepickerHeaderDate, "yyyy")}
@@ -200,11 +200,11 @@ export default function CustomDatePicker({ key, label }: {
                             <div>
                                 <button
                                     type="button"
-                                    className="transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 rounded-full"
+                                    className="inline-flex p-1 transition duration-100 ease-in-out rounded-full cursor-pointer hover:bg-gray-200"
                                     onClick={increment}
                                 >
                                     <svg
-                                        className="h-6 w-6 text-gray-500 inline-flex"
+                                        className="inline-flex w-6 h-6 text-gray-500"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -228,7 +228,7 @@ export default function CustomDatePicker({ key, label }: {
                                             style={{ width: "14.26%" }}
                                             className="px-1"
                                         >
-                                            <div className="text-gray-800 font-medium text-center text-xs">
+                                            <div className="text-xs font-medium text-center text-gray-800">
                                                 {day}
                                             </div>
                                         </div>
@@ -239,7 +239,7 @@ export default function CustomDatePicker({ key, label }: {
                                         <div
                                             key={i}
                                             style={{ width: "14.26%" }}
-                                            className="text-center border p-1 border-transparent text-sm"
+                                            className="p-1 text-sm text-center border border-transparent"
                                         ></div>
                                     ))}
                                     {dayCount.map((d, i) => (

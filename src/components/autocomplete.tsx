@@ -27,11 +27,11 @@ export default function Autocomplete({ name, label }: {
     return (
 
         <div className="col-span-1">
-            <label htmlFor="country" className="text-left block text-sm font-medium text-gray-700">
+            <label htmlFor="country" className="block px-2 text-xs font-medium text-left text-white">
                 {label}
             </label>
             <input type="text"
-                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 value={selected}
                 onChange={(data: any) => searchCountries(data.target.value)}></input>
             <div>
