@@ -11,9 +11,7 @@ export interface IFormInput {
   to: string;
   depart: Date;
   return: Date;
-  adult: number;
-  child: number;
-  class: string
+  options: IFlyOptions
 }
 
 export interface IFlyOptions {
@@ -45,6 +43,7 @@ export default function Form() {
           <input
             className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
             {...register("type")}
+            defaultChecked={true}
             type="radio"
             name="type"
             value="ar"
@@ -78,13 +77,18 @@ export default function Form() {
       </div>
 
       <div className="md:grid md:grid-cols-6 md:gap-2">
-        
+
         <Controller
           control={control}
           name="from"
           render={
             ({ field: { onChange, onBlur, value, ref } }) => (
-              <Autocomplete name="from" label="From" />
+              <Autocomplete 
+                name="from" 
+                label="From" 
+                value={value}
+                placeholder="Pays, ville ou aéroport"
+                onChange={onChange} />
             )
           }
         />
@@ -94,7 +98,12 @@ export default function Form() {
           name="to"
           render={
             ({ field: { onChange, onBlur, value, ref } }) => (
-              <Autocomplete name="to" label="To" />
+              <Autocomplete
+                name="to"
+                label="To"
+                placeholder="Pays, ville ou aéroport"
+                value={value}
+                onChange={onChange} />
             )
           }
         />
@@ -102,9 +111,15 @@ export default function Form() {
         <Controller
           control={control}
           name="depart"
+          defaultValue={new Date()}
           render={
             ({ field: { onChange, onBlur, value, ref } }) => (
-              <CustomDatePicker key="depart" label="Départ" />
+              <CustomDatePicker
+                key="depart"
+                label="Départ"
+                value={value}
+                onChange={onChange}
+              />
             )
           }
         />
@@ -112,19 +127,33 @@ export default function Form() {
         <Controller
           control={control}
           name="return"
+          defaultValue={new Date()}
           render={
             ({ field: { onChange, onBlur, value, ref } }) => (
-              <CustomDatePicker key="return" label="Retour" />
+              <CustomDatePicker key="return" label="Retour"
+                value={value}
+                onChange={onChange} />
             )
           }
         />
 
-        <ClassForm handleFlyOptions={handleFlyOptions} />
-
+        <Controller
+          control={control}
+          name="options"
+          defaultValue={{
+            adult: 1,
+            child: 0,
+            class: 'eco'
+          }}
+          render={
+            ({ field: { onChange, onBlur, value, ref } }) => (
+              <ClassForm 
+                value={value}
+                onChange={onChange} />
+            )
+          }
+        />
       </div>
-
-
-
 
       <div className="px-4 py-3 text-right sm:px-6">
         <button

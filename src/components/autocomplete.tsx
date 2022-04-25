@@ -2,25 +2,27 @@
 import React, { useState } from "react";
 import { countries } from "./countries";
 
-export default function Autocomplete({ name, label }: {
+export default function Autocomplete({ name, label, value, onChange, placeholder }: {
     name: string;
-    label: string
+    label: string;
+    value: string;
+    placeholder: string;
+    onChange: (...event: any[]) => void;
 }) {
 
     const [options, setOptions] = useState<string[]>([]);
-    const [selected, setSelected] = useState<string>();
 
     const searchCountries = (value: string) => {
         const values: string[] = countries
             .filter(country => country.label.toLowerCase().match(value.toLowerCase()))
             .map(country => country.label)
             .slice(0, 5);
-        setSelected(undefined);
+        onChange(undefined);
         setOptions(values);
     }
 
     const selectOption = (value: string) => {
-        setSelected(value);
+        onChange(value);
         setOptions([]);
     }
 
@@ -31,8 +33,9 @@ export default function Autocomplete({ name, label }: {
                 {label}
             </label>
             <input type="text"
+                placeholder={placeholder}
                 className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                value={selected}
+                value={value}
                 onChange={(data: any) => searchCountries(data.target.value)}></input>
             <div>
                 <ul className="divide-y divide-gray-200">
@@ -44,6 +47,5 @@ export default function Autocomplete({ name, label }: {
                 </ul>
             </div>
         </div>
-
     )
 };

@@ -9,19 +9,21 @@ import {
     getDaysInMonth,
     getDay
 } from "date-fns";
+import { Noop } from "react-hook-form";
 
 type DatepickerType = "date" | "month" | "year";
 
-export default function CustomDatePicker({ key, label }: {
-    key: string;
+export default function CustomDatePicker(
+    { label, onChange, value }: {
     label: any;
+    value: Date;
+    onChange: (...event: any[]) => void;
 }) {
     const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const [dayCount, setDayCount] = useState<Array<number>>([]);
     const [blankDays, setBlankDays] = useState<Array<number>>([]);
     const [showDatepicker, setShowDatepicker] = useState(false);
     const [datepickerHeaderDate, setDatepickerHeaderDate] = useState(new Date());
-    const [selectedDate, setSelectedDate] = useState(new Date());
     const [type, setType] = useState<DatepickerType>("date");
 
     const decrement = () => {
@@ -54,12 +56,12 @@ export default function CustomDatePicker({ key, label }: {
 
     const isToday = (date: number) =>
         isEqual(
-            new Date(selectedDate.getFullYear(), selectedDate.getMonth(), date),
-            selectedDate
+            new Date(value.getFullYear(), value.getMonth(), date),
+            value
         );
 
     const setDateValue = (date: number) => () => {
-        setSelectedDate(
+        onChange(
             new Date(
                 datepickerHeaderDate.getFullYear(),
                 datepickerHeaderDate.getMonth(),
@@ -67,6 +69,7 @@ export default function CustomDatePicker({ key, label }: {
             )
         );
         setShowDatepicker(false);
+        
     };
 
     const getDayCount = (date: Date) => {
@@ -90,8 +93,8 @@ export default function CustomDatePicker({ key, label }: {
 
     const isSelectedMonth = (month: number) =>
         isEqual(
-            new Date(selectedDate.getFullYear(), month, selectedDate.getDate()),
-            selectedDate
+            new Date(value.getFullYear(), month, value.getDate()),
+            value
         );
 
     const setMonthValue = (month: number) => () => {
@@ -131,8 +134,9 @@ export default function CustomDatePicker({ key, label }: {
                     readOnly
                     className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     placeholder="Select date"
-                    value={format(selectedDate, "yyyy-MM-dd")}
+                    value={format(value, "dd MMM yyyy")}
                     onClick={toggleDatepicker}
+                    onChange={onChange}
                 />
                 <div
                     className="absolute top-0 right-0 px-3 py-2 cursor-pointer"
@@ -292,17 +296,19 @@ export default function CustomDatePicker({ key, label }: {
                             </div>
                         )}{" "}
                         {type === "year" && (
+                            <div>
                             <Datepicker
                                 datepickerHeaderDate={datepickerHeaderDate}
-                                selectedDate={selectedDate}
-                                setSelectedDate={setSelectedDate}
+                                onChange={(date: Date) => onChange(date)}
+                                selectedDate={value}
                                 closeDatepicker={() => setShowDatepicker(false)}
                             />
+                            {value}
+                            </div>
                         )}
                     </div>
                 )}
             </div>
         </div>
-
     );
 }

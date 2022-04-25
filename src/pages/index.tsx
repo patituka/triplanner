@@ -5,7 +5,7 @@ import NavBar from "../components/navbar";
 // markup
 const IndexPage = () => {
   return (
-    <div className="relative overflow-hidden bg-cover	 bg-[url('./images/banner-md.jpg')]">
+    <div className="relative bg-cover	 bg-[url('./images/banner-md.jpg')]">
       <NavBar />
       <div className="mx-auto max-w-7xl lg:mt-30">
         <div className="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:w-full lg:pb-28 xl:pb-32">
